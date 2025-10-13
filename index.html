@@ -173,6 +173,32 @@ nav {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.notice-banner {
+    position: fixed;
+    top: 72px; /* sits just below nav */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 110;
+    background: rgba(255, 60, 60, 0.95);
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    backdrop-filter: blur(6px);
+    pointer-events: auto;
+    animation: noticePulse 2.5s ease-in-out infinite;
+    font-family: 'Space Mono', monospace;
+}
+
+@keyframes noticePulse {
+    0%,100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.02); }
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -634,6 +660,11 @@ footer {
             <a href="#about">About</a>
         </div>
     </nav>
+
+    <!-- Notice banner: bot down -->
+    <div class="notice-banner" role="status" aria-live="polite">
+        ⚠️ DeluluBot is currently down — the team is working on a fix.
+    </div>
 
     <section class="hero">
         <div class="hero-content">
