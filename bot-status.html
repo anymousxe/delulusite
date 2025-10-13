@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bot Status</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .status {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .online { color: green; }
+    .offline { color: red; }
+    .error { color: orange; }
+  </style>
+</head>
+<body>
+  <h1>Discord Bot Status</h1>
+  <p class="status" id="status">Checking...</p>
+
+  <script>
+    async function checkStatus() {
+      try {
+        const res = await fetch("https://YOUR-BOT-APP.vercel.app/api/health");
+        const data = await res.json();
+
+        const statusEl = document.getElementById("status");
+        if (data.status === "online") {
+          statusEl.textContent = "✅ Bot is Online";
+          statusEl.className = "status online";
+        } else {
+          statusEl.textContent = "❌ Bot is Offline";
+          statusEl.className = "status offline";
+        }
+      } catch (err) {
+        const statusEl = document.getElementById("status");
+        statusEl.textContent = "⚠️ Error connecting to bot";
+        statusEl.className = "status error";
+      }
+    }
+
+    checkStatus();
+    // Optionally auto-refresh every minute:
+    setInterval(checkStatus, 60 * 1000);
+  </script>
+</body>
+</html>
