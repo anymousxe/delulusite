@@ -631,12 +631,11 @@ footer {
         </div>
     </nav>
 
-    <!-- Notice: bot back up but DB broken -->
-    <div class="notice" id="db-notice" role="status" aria-live="polite">
-        <div class="msg">Notice: DeluluBot is back online — however the database is currently broken and changes may not save correctly. Our team is working on a fix.</div>
-        <button class="close" id="close-notice" aria-label="Dismiss notice">Dismiss</button>
+    <div class="notice" id="update-notice" role="status" aria-live="polite">
+        <div class="msg">Update: Patch <strong>1.3</strong> — adding better timing, fixing errors and more.</div>
+        <button class="close" id="notice-close" aria-label="Dismiss update notice">Dismiss</button>
     </div>
-
+    
     <section class="hero">
         <div class="hero-content">
             <h1 class="glitch" data-text="DeluluBot">DeluluBot</h1>
@@ -860,15 +859,19 @@ function playClickSound() {
 loadSound('click_sound.mp3');
 
 // Dismissible notice behavior
-document.getElementById('close-notice')?.addEventListener('click', function() {
-    const n = document.getElementById('db-notice');
-    if (n) {
-        n.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-        n.style.opacity = '0';
-        n.style.transform = 'translateY(-10px)';
-        setTimeout(() => n.remove(), 260);
-    }
-});
+(() => {
+    const notice = document.getElementById('update-notice');
+    const closeBtn = document.getElementById('notice-close');
+    if (!notice || !closeBtn) return;
+
+    closeBtn.addEventListener('click', (e) => {
+        playClickSound();
+        notice.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        notice.style.opacity = '0';
+        notice.style.transform = 'translateY(-8px)';
+        setTimeout(() => notice.remove(), 300);
+    });
+})();
 
 // Disable right-click
 document.addEventListener('contextmenu', (e) => {
