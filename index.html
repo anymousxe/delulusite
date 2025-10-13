@@ -16,8 +16,8 @@
 }
 
 body {
-    font-family: 'Space Mono', monospace;
-    background: #0a0a0a;
+    font-family: 'Poppins', sans-serif;
+    background-color: #0d112b;
     color: #fff;
     overflow-x: hidden;
     cursor: none;
@@ -31,19 +31,36 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-    z-index: 1;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: 0;
+    opacity: 0.5;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    z-index: -1;
 }
 
 .cursor {
     width: 20px;
     height: 20px;
-    border: 2px solid #00ff88;
+    border: 2px solid #00d4ff;
     border-radius: 50%;
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s ease, border-color 0.3s ease;
+    transition: transform 0.1s ease, border-color 0.3s ease, background-color 0.3s ease, width 0.3s ease, height 0.3s ease;
     mix-blend-mode: difference;
 }
 
@@ -54,12 +71,11 @@ body::before {
 
 .cursor.hover {
     transform: scale(0.7);
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-color: #00d4ff;
     mix-blend-mode: normal;
-    background: #00d4ff;
-    opacity: 0.8;
+    background-color: rgba(0, 212, 255, 0.2);
 }
 
 .gradient-bg {
@@ -68,95 +84,21 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #ff00ff, #00ff88, #00d4ff, #ff00ff);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-    opacity: 0.15;
+    background: radial-gradient(ellipse at top left, #ff00ff, transparent 50%),
+                radial-gradient(ellipse at bottom right, #00d4ff, transparent 50%);
+    background-size: 200% 200%;
+    animation: gradientShift 20s ease infinite alternate;
+    opacity: 0.1;
     z-index: 0;
 }
 
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
 }
 
 .floating-shapes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.shape {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.4;
-    animation: float 20s infinite ease-in-out;
-}
-
-.shape-1 {
-    width: 300px;
-    height: 300px;
-    background: #ff00ff;
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.shape-2 {
-    width: 250px;
-    height: 250px;
-    background: #00ff88;
-    top: 60%;
-    right: 10%;
-    animation-delay: -5s;
-}
-
-.shape-3 {
-    width: 200px;
-    height: 200px;
-    background: #00d4ff;
-    bottom: 20%;
-    left: 50%;
-    animation-delay: -10s;
-}
-
-.shape-4 {
-    width: 350px;
-    height: 350px;
-    background: #ffaa00;
-    top: 40%;
-    left: 20%;
-    animation-delay: -7s;
-}
-
-.shape-5 {
-    width: 280px;
-    height: 280px;
-    background: #aa00ff;
-    bottom: 10%;
-    right: 30%;
-    animation-delay: -3s;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(50px, -50px) scale(1.1);
-    }
-    50% {
-        transform: translate(-30px, 30px) scale(0.9);
-    }
-    75% {
-        transform: translate(40px, 20px) scale(1.05);
-    }
+   display: none; /* Replaced with gridlines and noise */
 }
 
 nav {
@@ -168,35 +110,46 @@ nav {
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    background: rgba(10, 10, 10, 0.7);
+    background: rgba(13, 17, 43, 0.7);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.notice-banner {
+/* New notice banner */
+.notice {
     position: fixed;
-    top: 72px; /* sits just below nav */
+    top: 75px; /* Adjusted for nav height */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 110;
-    background: rgba(255, 60, 60, 0.95);
-    color: #fff;
-    padding: 0.6rem 1.2rem;
+    width: calc(100% - 10%);
+    max-width: 1100px;
+    background: rgba(255, 200, 0, 0.08);
+    border: 1px solid rgba(255, 200, 0, 0.25);
+    color: #ffd966;
+    padding: 0.8rem 1rem;
     border-radius: 10px;
-    font-weight: 700;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
     display: flex;
-    gap: 0.8rem;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 120;
+    font-weight: 500;
     backdrop-filter: blur(6px);
-    pointer-events: auto;
-    animation: noticePulse 2.5s ease-in-out infinite;
-    font-family: 'Space Mono', monospace;
 }
 
-@keyframes noticePulse {
-    0%,100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.02); }
+.notice .msg {
+    flex: 1;
+    color: #ffd966;
+}
+
+.notice .close {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #ffd966;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
 }
 
 .logo {
@@ -218,7 +171,7 @@ nav {
 }
 
 .logo-text {
-    background: linear-gradient(45deg, #ff00ff, #00ff88);
+    background: linear-gradient(45deg, #ff00ff, #00d4ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -230,21 +183,26 @@ nav {
 }
 
 .nav-links a {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 500;
     position: relative;
     transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #fff;
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
     bottom: -5px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #ff00ff, #00ff88);
+    background: linear-gradient(90deg, #ff00ff, #00d4ff);
     transition: width 0.3s ease;
 }
 
@@ -270,18 +228,21 @@ nav {
 
 .glitch {
     font-size: 5rem;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 1rem;
     position: relative;
     animation: glitch 3s infinite;
+    letter-spacing: -2px;
 }
 
 @keyframes glitch {
     0%, 90%, 100% {
         transform: translate(0);
+        text-shadow: none;
     }
     92% {
         transform: translate(-2px, 2px);
+        text-shadow: 2px 2px 0 #ff00ff, -2px -2px 0 #00d4ff;
     }
     94% {
         transform: translate(2px, -2px);
@@ -293,8 +254,9 @@ nav {
 
 .subtitle {
     font-size: 1.8rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(90deg, #ff00ff, #00ff88, #00d4ff);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #ff00ff, #00d4ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -312,7 +274,7 @@ nav {
     font-size: 1.1rem;
     margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .cta-button {
@@ -320,26 +282,35 @@ nav {
     position: relative;
     text-decoration: none;
     overflow: hidden;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.5), 0 0 10px rgba(255, 0, 255, 0.3);
 }
 
 .button-content {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 1.2rem 2.5rem;
-    background: linear-gradient(135deg, #ff00ff, #00ff88);
-    border-radius: 50px;
-    font-size: 1.2rem;
+    padding: 1.1rem 2.2rem;
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.8), rgba(0, 212, 255, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
     position: relative;
     z-index: 2;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .cta-button:hover .button-content {
     transform: scale(1.05);
+    background: linear-gradient(135deg, #ff00ff, #00d4ff);
 }
+
 
 .button-icon {
     font-size: 1.5rem;
@@ -352,27 +323,7 @@ nav {
 }
 
 .button-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 0, 255, 0.5), transparent);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: 50px;
-    filter: blur(20px);
-}
-
-.cta-button:hover .button-glow {
-    opacity: 1;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.2); }
+   display: none; /* Replaced by box-shadow on parent */
 }
 
 .hero-visual {
@@ -392,7 +343,7 @@ nav {
     position: absolute;
     width: 150px;
     height: 150px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -406,7 +357,8 @@ nav {
 
 .showcase-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(255, 0, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 0, 255, 0.5);
 }
 
 .card-emoji {
@@ -462,7 +414,8 @@ nav {
     font-size: 3rem;
     text-align: center;
     margin-bottom: 4rem;
-    background: linear-gradient(90deg, #ff00ff, #00ff88);
+    font-weight: 800;
+    background: linear-gradient(90deg, #ff00ff, #00d4ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -476,35 +429,54 @@ nav {
 
 .feature-card {
     background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(0, 212, 255, 0.2), transparent 30%);
+    animation: rotate 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
 }
 
 .feature-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
-    border-color: rgba(0, 255, 136, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 212, 255, 0.3);
 }
 
 .feature-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    animation: iconBounce 2s infinite;
-}
-
-@keyframes iconBounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
 }
 
 .feature-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #00ff88;
+    color: #00d4ff;
+    font-weight: 700;
 }
 
 .feature-card p {
@@ -521,10 +493,9 @@ nav {
 }
 
 .command-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
     padding: 1.5rem;
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
@@ -543,16 +514,18 @@ nav {
 
 .command-name {
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 600;
     color: #ff00ff;
+    font-family: 'Space Mono', monospace;
 }
 
 .command-badge {
     padding: 0.3rem 0.8rem;
-    background: rgba(0, 255, 136, 0.2);
+    background: rgba(0, 212, 255, 0.1);
     border-radius: 20px;
     font-size: 0.8rem;
-    color: #00ff88;
+    color: #00d4ff;
+    font-weight: 500;
 }
 
 .command-desc {
@@ -573,14 +546,18 @@ nav {
 }
 
 .cta-button.secondary .button-content {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.8), rgba(255, 0, 255, 0.8));
+}
+
+.cta-button.secondary:hover .button-content {
     background: linear-gradient(135deg, #00d4ff, #ff00ff);
 }
 
 footer {
     text-align: center;
     padding: 2rem;
-    background: rgba(10, 10, 10, 0.9);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #090c22;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
     z-index: 2;
     color: rgba(255, 255, 255, 0.5);
@@ -590,11 +567,11 @@ footer {
     .hero {
         flex-direction: column;
         text-align: center;
-        padding-top: 6rem;
+        padding-top: 8rem;
     }
 
     .glitch {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
 
     .subtitle {
@@ -602,11 +579,12 @@ footer {
     }
 
     .nav-links {
-        gap: 1rem;
+        gap: 1.5rem;
         font-size: 0.9rem;
     }
 
     .bot-showcase {
+        margin-top: 2rem;
         width: 300px;
         height: 300px;
     }
@@ -630,23 +608,15 @@ footer {
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="cursor"></div>
     
-    <div class="floating-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
-        <div class="shape shape-5"></div>
-    </div>
-
     <div class="gradient-bg"></div>
 
     <nav>
@@ -661,22 +631,22 @@ footer {
         </div>
     </nav>
 
-    <!-- Notice banner: bot down -->
-    <div class="notice-banner" role="status" aria-live="polite">
-        ⚠️ DeluluBot is currently down — the team is working on a fix.
+    <!-- Notice: bot back up but DB broken -->
+    <div class="notice" id="db-notice" role="status" aria-live="polite">
+        <div class="msg">Notice: DeluluBot is back online — however the database is currently broken and changes may not save correctly. Our team is working on a fix.</div>
+        <button class="close" id="close-notice" aria-label="Dismiss notice">Dismiss</button>
     </div>
 
     <section class="hero">
         <div class="hero-content">
             <h1 class="glitch" data-text="DeluluBot">DeluluBot</h1>
-            <p class="subtitle">The most delulu bot for your Discord server 🎉</p>
-            <p class="description">Build your empire, flex your wealth, and compete with friends in the most chaotic economy system ever!</p>
+            <p class="subtitle">Your Server's Official Agent of Chaos 🎉</p>
+            <p class="description">Build your empire, flex your wealth, and compete with friends in the most unhinged economy system ever!</p>
             <a href="https://discord.com/oauth2/authorize?client_id=1425560097727316048&scope=bot%20applications.commands" class="cta-button" target="_blank">
                 <span class="button-content">
                     <span class="button-icon">🚀</span>
                     <span class="button-text">Add to Discord</span>
                 </span>
-                <div class="button-glow"></div>
             </a>
         </div>
         <div class="hero-visual">
@@ -698,21 +668,21 @@ footer {
     </section>
 
     <section id="features" class="features">
-        <h2 class="section-title">Why Go Delulu?</h2>
+        <h2 class="section-title">Embrace The Chaos</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">💸</div>
-                <h3>Economy System</h3>
+                <h3>Unhinged Economy</h3>
                 <p>Work, gamble, and trade your way to the top of the leaderboard!</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🎲</div>
-                <h3>Casino Games</h3>
-                <p>Test your luck with blackjack, slots, and more chaotic games!</p>
+                <h3>Chaotic Casino</h3>
+                <p>Test your luck with blackjack, slots, and other questionable games!</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🏆</div>
-                <h3>Leaderboards</h3>
+                <h3>Flex Leaderboards</h3>
                 <p>Compete with your server to become the ultimate delulu champion!</p>
             </div>
             <div class="feature-card">
@@ -722,13 +692,13 @@ footer {
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🛒</div>
-                <h3>Shop System</h3>
-                <p>Buy items, roles, and perks to flex on your friends!</p>
+                <h3>Absurd Shop</h3>
+                <p>Buy useless items, fancy roles, and perks to flex on your friends!</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">😂</div>
                 <h3>Goofy Commands</h3>
-                <p>Enjoy ridiculous commands that'll make everyone laugh!</p>
+                <p>Enjoy ridiculous commands that'll make everyone question your sanity!</p>
             </div>
         </div>
     </section>
@@ -789,7 +759,6 @@ footer {
                 <span class="button-icon">✨</span>
                 <span class="button-text">Get Started Now</span>
             </span>
-            <div class="button-glow"></div>
         </a>
     </section>
 
@@ -889,6 +858,17 @@ function playClickSound() {
 
 // Initialize sound loading
 loadSound('click_sound.mp3');
+
+// Dismissible notice behavior
+document.getElementById('close-notice')?.addEventListener('click', function() {
+    const n = document.getElementById('db-notice');
+    if (n) {
+        n.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        n.style.opacity = '0';
+        n.style.transform = 'translateY(-10px)';
+        setTimeout(() => n.remove(), 260);
+    }
+});
 
 // Disable right-click
 document.addEventListener('contextmenu', (e) => {
@@ -991,7 +971,8 @@ safeQueryAll('.feature-card, .command-card').forEach(el => {
     observer.observe(el);
 });
 
-// Interactive shapes follow cursor
+// Interactive shapes follow cursor - DISABLED as shapes are removed
+/*
 const shapes = safeQueryAll('.shape');
 
 document.addEventListener('mousemove', (e) => {
@@ -1006,6 +987,7 @@ document.addEventListener('mousemove', (e) => {
         shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
     });
 });
+*/
 
 // Add ripple effect to buttons
 safeQueryAll('.cta-button').forEach(button => {
@@ -1048,17 +1030,19 @@ window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero-visual');
     if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        hero.style.transform = `translateY(${scrolled * 0.15}px)`;
     }
 });
 
-// Random color shifts on feature icons
+// Random color shifts on feature icons - DISABLED for cleaner look
+/*
 setInterval(() => {
     document.querySelectorAll('.feature-icon').forEach(icon => {
         const hue = Math.random() * 360;
         icon.style.filter = `hue-rotate(${hue}deg)`;
     });
 }, 5000);
+*/
     </script>
 </body>
 </html>
