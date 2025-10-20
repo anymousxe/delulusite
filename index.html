@@ -115,43 +115,6 @@ nav {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* New notice banner */
-.notice {
-    position: fixed;
-    top: 75px; /* Adjusted for nav height */
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 10%);
-    max-width: 1100px;
-    background: rgba(255, 200, 0, 0.08);
-    border: 1px solid rgba(255, 200, 0, 0.25);
-    color: #ffd966;
-    padding: 0.8rem 1rem;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    z-index: 120;
-    font-weight: 500;
-    backdrop-filter: blur(6px);
-}
-
-.notice .msg {
-    flex: 1;
-    color: #ffd966;
-}
-
-.notice .close {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.08);
-    color: #ffd966;
-    padding: 0.35rem 0.6rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-}
-
 .logo {
     display: flex;
     align-items: center;
@@ -277,6 +240,42 @@ nav {
     line-height: 1.7;
 }
 
+.status-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.status-card .status-icon {
+    font-size: 1.8rem;
+}
+
+.status-card .status-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.status-card .status-heading {
+    font-weight: 700;
+    color: #ff8080;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.status-card .status-body {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
 .cta-button {
     display: inline-block;
     position: relative;
@@ -309,6 +308,23 @@ nav {
 .cta-button:hover .button-content {
     transform: scale(1.05);
     background: linear-gradient(135deg, #ff00ff, #00d4ff);
+}
+
+.cta-button.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.cta-button.disabled .button-content {
+    background: linear-gradient(135deg, rgba(120, 120, 140, 0.9), rgba(80, 80, 110, 0.9));
+    border-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    transform: none;
+    box-shadow: none;
+}
+
+.cta-button.disabled .button-icon {
+    animation: none;
 }
 
 
@@ -553,6 +569,10 @@ nav {
     background: linear-gradient(135deg, #00d4ff, #ff00ff);
 }
 
+.cta-button.secondary.disabled .button-content {
+    background: linear-gradient(135deg, rgba(110, 110, 130, 0.9), rgba(70, 70, 100, 0.9));
+}
+
 footer {
     text-align: center;
     padding: 2rem;
@@ -631,20 +651,22 @@ footer {
         </div>
     </nav>
 
-    <div class="notice" id="update-notice" role="status" aria-live="polite">
-        <div class="msg">Update: Patch <strong>1.3</strong> — adding better timing, fixing errors and more.</div>
-        <button class="close" id="notice-close" aria-label="Dismiss update notice">Dismiss</button>
-    </div>
-    
     <section class="hero">
         <div class="hero-content">
             <h1 class="glitch" data-text="DeluluBot">DeluluBot</h1>
-            <p class="subtitle">Your Server's Official Agent of Chaos 🎉</p>
-            <p class="description">Build your empire, flex your wealth, and compete with friends in the most unhinged economy system ever!</p>
-            <a href="https://discord.com/oauth2/authorize?client_id=1425560097727316048&scope=bot%20applications.commands" class="cta-button" target="_blank">
+            <div class="status-card" role="status" aria-live="polite">
+                <span class="status-icon">🛠️</span>
+                <span class="status-text">
+                    <span class="status-heading">Service Update</span>
+                    <span class="status-body">DeluluBot is currently offline while we migrate to a dedicated Node.js stack.</span>
+                </span>
+            </div>
+            <p class="subtitle">Rebuilding the chaos, one Node at a time ⚙️</p>
+            <p class="description">We're upgrading DeluluBot from a serverless experiment into a full Node.js powerhouse. During this move the bot will stay offline, but expect steadier performance, richer commands, and fewer hiccups once we're back.</p>
+            <a href="https://discord.com/oauth2/authorize?client_id=1425560097727316048&scope=bot%20applications.commands" class="cta-button disabled" target="_blank" aria-disabled="true" tabindex="-1">
                 <span class="button-content">
-                    <span class="button-icon">🚀</span>
-                    <span class="button-text">Add to Discord</span>
+                    <span class="button-icon">🛑</span>
+                    <span class="button-text">Bot Offline During Migration</span>
                 </span>
             </a>
         </div>
@@ -752,11 +774,11 @@ footer {
 
     <section id="about" class="about">
         <h2 class="section-title">Stay Delulu</h2>
-        <p class="about-text">DeluluBot brings chaos and fun to your Discord server with an addictive economy system and hilarious commands. Start your delulu journey today!</p>
-        <a href="https://discord.com/oauth2/authorize?client_id=1425560097727316048&scope=bot%20applications.commands" class="cta-button secondary" target="_blank">
+        <p class="about-text">DeluluBot brings chaos and fun to your Discord server with an addictive economy system and hilarious commands. We're rebuilding everything on a dedicated Node.js stack so the next release hits harder, faster, and with way more stability.</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1425560097727316048&scope=bot%20applications.commands" class="cta-button secondary disabled" target="_blank" aria-disabled="true" tabindex="-1">
             <span class="button-content">
-                <span class="button-icon">✨</span>
-                <span class="button-text">Get Started Now</span>
+                <span class="button-icon">⌛</span>
+                <span class="button-text">Sit Tight for the Relaunch</span>
             </span>
         </a>
     </section>
@@ -857,21 +879,6 @@ function playClickSound() {
 
 // Initialize sound loading
 loadSound('click_sound.mp3');
-
-// Dismissible notice behavior
-(() => {
-    const notice = document.getElementById('update-notice');
-    const closeBtn = document.getElementById('notice-close');
-    if (!notice || !closeBtn) return;
-
-    closeBtn.addEventListener('click', (e) => {
-        playClickSound();
-        notice.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-        notice.style.opacity = '0';
-        notice.style.transform = 'translateY(-8px)';
-        setTimeout(() => notice.remove(), 300);
-    });
-})();
 
 // Disable right-click
 document.addEventListener('contextmenu', (e) => {
@@ -995,6 +1002,10 @@ document.addEventListener('mousemove', (e) => {
 // Add ripple effect to buttons
 safeQueryAll('.cta-button').forEach(button => {
     button.addEventListener('click', function(e) {
+        if (this.classList.contains('disabled')) {
+            e.preventDefault();
+            return;
+        }
         playClickSound(); // Added sound
         const ripple = document.createElement('div');
         ripple.style.position = 'absolute';
